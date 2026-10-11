@@ -20,6 +20,7 @@ Sistema web desenvolvido em Django e Bootstrap para o controle de colaboradores,
 - **Frontend:** Bootstrap 5, HTML5, CSS3 (Interface responsiva e moderna)
 - **Base de Dados:** SQLite (Armazenamento e persistência de dados)
 - **Controle de Versão:** Git / GitHub
+- **Conteinerização:** Docker (`Dockerfile`)
 
 ---
 
@@ -35,7 +36,9 @@ Sistema web desenvolvido em Django e Bootstrap para o controle de colaboradores,
 
 # 🛠️ Como Executar o Projeto
 
-Siga as etapas abaixo para configurar e executar o projeto localmente.
+Siga as etapas abaixo para configurar e executar o projeto localmente. Há duas formas de executar o projeto:
+
+## Opção 1: Execução Sem o Docker
 
 ## 1. Clonar ou abrir a pasta do projeto
 
@@ -100,3 +103,29 @@ Após iniciar o servidor, abra o navegador e acesse:
 **http://127.0.0.1:8000/**
 
 Para encerrar o servidor, pressione `Ctrl + C` no terminal.
+
+## Opção 2: Execução Com o Docker
+
+Foi realizada a conteinerização da aplicação para permitir sua execução em um ambiente isolado, sem a necessidade de ativar o ambiente virtual (venv) ou instalar as dependências localmente.
+
+Caso opte por executar o projeto utilizando o Docker, siga os passos abaixo:
+
+## 1. Gerar a imagem do Docker
+
+Execute o seguinte comando no terminal PowerShell, dentro da pasta raiz do projeto:
+
+docker build -t sistema-epi .
+
+## 2. Executar o contêiner
+
+Após gerar a imagem, execute o comando:
+
+docker run -p 8000:8000 sistema-epi
+
+## 3. Acessar a aplicação
+
+Após iniciar o contêiner, acesse o sistema pelo navegador no seguinte endereço:
+
+http://127.0.0.1:8000/
+
+Observação: Certifique-se de que o Docker esteja instalado e em execução no computador antes de executar os comandos.
