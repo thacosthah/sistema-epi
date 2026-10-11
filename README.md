@@ -1,6 +1,6 @@
 # 🛡️ Sistema de Gerenciamento de EPI - Setor Têxtil
 
-> Projeto desenvolvido no curso de Técnico em Desenvolvimento de Sistemas (SENAI) para o controlo inteligente e seguro de Equipamentos de Proteção Individual (EPI) numa indústria do setor têxtil.
+> Projeto desenvolvido no curso de Técnico em Desenvolvimento de Sistemas (SENAI) para o controle inteligente e seguro de Equipamentos de Proteção Individual (EPI) numa indústria do setor têxtil.
 
 ---
 
@@ -11,7 +11,7 @@
 ---
 
 ## 📋 Sobre o Projeto
-Sistema web desenvolvido em Django e Bootstrap para o controlo de colaboradores, inventário de EPIs, registo de empréstimos e devoluções, garantindo a conformidade com as normas regulamentadoras de segurança do trabalho e eliminando falhas de auditoria interna.
+Sistema web desenvolvido em Django e Bootstrap para o controle de colaboradores, inventário de EPIs, registo de empréstimos e devoluções, garantindo a conformidade com as normas regulamentadoras de segurança do trabalho e eliminando falhas de auditoria interna.
 
 ---
 
@@ -33,12 +33,70 @@ Sistema web desenvolvido em Django e Bootstrap para o controlo de colaboradores,
 
 ---
 
-## 🛠️ Como Executar o Projeto
+# 🛠️ Como Executar o Projeto
 
-### 1. Clonar ou abrir a pasta do projeto
-Abra o seu terminal (PowerShell ou CMD) na pasta raiz do projeto (`epi`).
+Siga as etapas abaixo para configurar e executar o projeto localmente.
 
-### 2. Ativar o ambiente virtual
-- **No Windows (PowerShell):**
-  ```powershell
-  .\venv\Scripts\Activate.ps1
+## 1. Clonar ou abrir a pasta do projeto
+
+Abra o terminal na pasta raiz do projeto, chamada `epi`.
+
+Caso ainda não tenha o projeto no computador, clone o repositório:
+
+```powershell
+Primeiro comando:
+git clone <URL_DO_REPOSITORIO>
+
+Segundo comando:
+cd epi
+```
+
+## 2. Ativar o ambiente virtual
+
+Ative o ambiente virtual de acordo com o terminal utilizado.
+
+**PowerShell:**
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+
+## 3. Instalar as dependências
+
+Com o ambiente virtual ativado, instale o Django:
+
+```powershell
+pip install django
+```
+
+> **Observação:** Se o projeto possuir um arquivo `requirements.txt`, prefira instalar todas as dependências listadas nele:
+
+```powershell
+pip install -r requirements.txt
+```
+
+## 4. Criar e aplicar as migrações do banco de dados
+
+Execute os comandos abaixo para gerar as migrações necessárias e sincronizar as tabelas do banco de dados:
+
+```powershell
+python manage.py makemigrations
+python manage.py migrate
+```
+
+## 5. Iniciar o servidor de desenvolvimento
+
+Execute o seguinte comando para iniciar o servidor Django:
+
+```powershell
+python manage.py runserver
+```
+
+## 6. Acessar o sistema
+
+Após iniciar o servidor, abra o navegador e acesse:
+
+**http://127.0.0.1:8000/**
+
+Para encerrar o servidor, pressione `Ctrl + C` no terminal.
