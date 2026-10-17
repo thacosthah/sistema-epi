@@ -15,6 +15,11 @@ Sistema web desenvolvido em Django e Bootstrap para o controle de colaboradores,
 
 ---
 
+## 🎨 Protótipo e Wireframe (Figma)
+- **Link do Protótipo no Figma:** [Acessar Wireframe no Figma] https://www.figma.com/design/O1ZoMmp9KxrAMT2NHlySWO/Untitled?node-id=0-1&t=31CKsp6iwxLh00g4-1
+
+---
+
 ## 🚀 Tecnologias Utilizadas
 - **Backend:** Python / Django (Framework web)
 - **Frontend:** Bootstrap 5, HTML5, CSS3 (Interface responsiva e moderna)
