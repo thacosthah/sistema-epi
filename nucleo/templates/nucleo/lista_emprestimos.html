@@ -1,0 +1,33 @@
+{% extends 'nucleo/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Registro de Empréstimos de EPI</h2>
+    <a href="{% url 'cadastra_emprestimo' %}" class="btn btn-primary">+ Novo Empréstimo</a>
+</div>
+
+<table class="table table-striped border">
+    <thead class="table-dark">
+        <tr>
+            <th>Colaborador</th>
+            <th>Equipamento</th>
+            <th>Status</th>
+            <th>Data Empréstimo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprestimo in emprestimos %}
+        <tr>
+            <td>{{ emprestimo.colaborador }}</td>
+            <td>{{ emprestimo.equipamento }}</td>
+            <td><span class="badge bg-info text-dark">{{ emprestimo.status }}</span></td>
+            <td>{{ emprestimo.data_emprestimo|date:"d/m/Y H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center py-4 text-muted">Nenhum empréstimo registrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
