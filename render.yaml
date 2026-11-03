@@ -4,7 +4,7 @@ services:
     env: python
     region: ohio
     plan: free
-    buildCommand: "pip install -r requirements.txt && python manage.py migrate"
+    buildCommand: "pip install -r requirements.txt && python manage.py migrate && python manage.py shell -c \"from django.contrib.auth.models import User; User.objects.filter(username='thais').exists() or User.objects.create_superuser('thais', 'thais@gmail.com', '1234')\""
     startCommand: "gunicorn epi.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
