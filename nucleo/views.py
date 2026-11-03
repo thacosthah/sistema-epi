@@ -178,8 +178,9 @@ def cadastra_emprestimo(request):
 
 @login_required
 def edita_emprestimo(request, pk):
-    if not request.user.is_superuser:
-        messages.error(request, 'Acesso negado: Apenas administradores podem editar empréstimos.')
+    # Permite se for superuser OU se tiver a permissão específica dada no Admin
+    if not request.user.is_superuser and not request.user.has_perm('nucleo.change_emprestimoepi'):
+        messages.error(request, 'Acesso negado: Não tens permissão para editar empréstimos.')
         return redirect('nucleo:lista_emprestimos')
 
     emprestimo_antigo = get_object_or_404(EmprestimoEPI, pk=pk)
@@ -233,10 +234,10 @@ def edita_emprestimo(request, pk):
 
 @login_required
 def atualiza_emprestimo(request, pk):
-    if not request.user.is_superuser:
-        messages.error(request, 'Acesso negado: Apenas administradores podem alternar status.')
+    if not request.user.is_superuser and not request.user.has_perm('nucleo.change_emprestimoepi'):
+        messages.error(request, 'Acesso negado: Não tens permissão para alternar status.')
         return redirect('nucleo:lista_emprestimos')
-
+    
     emprestimo = get_object_or_404(EmprestimoEPI, pk=pk)
     equipamento = emprestimo.equipamento
     
@@ -262,8 +263,9 @@ def atualiza_emprestimo(request, pk):
 
 @login_required
 def exclui_emprestimo(request, pk):
-    if not request.user.is_superuser:
-        messages.error(request, 'Acesso negado: Apenas administradores podem excluir empréstimos.')
+    # Permite se for superuser OU se tiver a permissão de excluir empréstimos que marcaste no Admin
+    if not request.user.is_superuser and not request.user.has_perm('nucleo.delete_emprestimoepi'):
+        messages.error(request, 'Acesso negado: Não tens permissão para excluir empréstimos.')
         return redirect('nucleo:lista_emprestimos')
         
     emprestimo = get_object_or_404(EmprestimoEPI, pk=pk)
