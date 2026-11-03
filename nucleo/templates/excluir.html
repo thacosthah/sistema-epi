@@ -1,0 +1,21 @@
+{% extends 'nucleo/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card bg-dark text-light border-secondary shadow">
+        <div class="card-header bg-danger text-white fw-bold">
+            <h3>Confirmar Exclusão</h3>
+        </div>
+        <div class="card-body">
+            <p>Tens a certeza de que pretendes excluir o registo: <strong>{{ objeto }}</strong>?</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-danger">Sim, Excluir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

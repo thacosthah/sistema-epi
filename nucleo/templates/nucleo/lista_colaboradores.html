@@ -1,0 +1,42 @@
+{% extends 'nucleo/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-light"><i class="fas fa-users me-2 text-warning"></i> Gestão de Colaboradores</h2>
+        {% if request.user.is_superuser %}
+            <a href="{% url 'nucleo:cadastra_colaborador' %}" class="btn btn-primary">+ Adicionar Colaborador</a>
+        {% endif %}
+    </div>
+
+    <table class="table table-dark table-striped table-hover shadow">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Cargo</th>
+                {% if request.user.is_superuser %}
+                    <th class="text-end">Ações</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in colaboradores %}
+            <tr>
+                <td>{{ c.nome }}</td>
+                <td>{{ c.cpf }}</td>
+                <td>{{ c.cargo }}</td>
+                {% if request.user.is_superuser %}
+                    <td class="text-end">
+                        <a href="{% url 'nucleo:edita_colaborador' c.id %}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="{% url 'nucleo:exclui_colaborador' c.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                {% endif %}
+            </tr>
+            {% empty %}
+            <tr><td colspan="{% if request.user.is_superuser %}4{% else %}3{% endif %}" class="text-center text-muted">Nenhum colaborador registado.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

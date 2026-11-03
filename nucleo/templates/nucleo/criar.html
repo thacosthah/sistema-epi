@@ -1,0 +1,92 @@
+{% extends 'nucleo/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card bg-dark text-light border-secondary shadow">
+        <div class="card-header bg-secondary text-dark fw-bold">
+            <h3>{{ titulo|default:"Registar / Editar" }}</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                {% if is_emprestimo %}
+                    <!-- Campos específicos de Empréstimo com IDs para o JS funcionar -->
+                    <div class="mb-3">
+                        <label class="form-label">Colaborador:</label>
+                        {{ form.colaborador }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Equipamento:</label>
+                        {{ form.equipamento }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Quantidade:</label>
+                        {{ form.quantidade }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Data de Empréstimo:</label>
+                        {{ form.data_emprestimo }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Data Prevista de Devolução:</label>
+                        {{ form.data_prevista_devolucao }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status:</label>
+                        {{ form.status }}
+                    </div>
+                    
+                    <div class="mb-3" id="grupo_data_devolucao">
+                        <label class="form-label">Data da Devolução:</label>
+                        {{ form.data_devolucao }}
+                    </div>
+                    
+                    <div class="mb-3" id="grupo_obs_devolucao">
+                        <label class="form-label">Observação na Devolução:</label>
+                        {{ form.observacao_devolucao }}
+                    </div>
+                {% else %}
+                    <!-- Renderização padrão para Colaboradores e Equipamentos -->
+                    {{ form.as_p }}
+                {% endif %}
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% if is_emprestimo %}
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const statusSelect = document.getElementById("id_status");
+        const grupoDataDev = document.getElementById("grupo_data_devolucao");
+        const grupoObsDev = document.getElementById("grupo_obs_devolucao");
+
+        function toggleCamposDevolucao() {
+            if (!statusSelect) return;
+            const status = statusSelect.value;
+            
+            if (["Devolvido", "Danificado", "Perdido"].includes(status)) {
+                if (grupoDataDev) grupoDataDev.style.display = "block";
+                if (grupoObsDev) grupoObsDev.style.display = "block";
+            } else {
+                if (grupoDataDev) grupoDataDev.style.display = "none";
+                if (grupoObsDev) grupoObsDev.style.display = "none";
+            }
+        }
+
+        if (statusSelect) {
+            toggleCamposDevolucao();
+            statusSelect.addEventListener("change", toggleCamposDevolucao);
+        }
+    });
+</script>
+{% endblock %}
+{% endif %}

@@ -1,0 +1,88 @@
+{% extends 'nucleo/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Lista de Empréstimos de EPI</h2>
+        <a href="{% url 'nucleo:cadastra_emprestimo' %}" class="btn btn-success">Registar Novo Empréstimo</a>
+    </div>
+
+    <!-- Filtros de Pesquisa -->
+    <div class="card bg-dark text-light border-secondary mb-4 shadow">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Colaborador</label>
+                    <input type="text" name="colaborador" value="{{ colaborador_nome|default:'' }}" class="form-control bg-secondary text-light border-0" placeholder="Nome do colaborador...">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Equipamento</label>
+                    <input type="text" name="equipamento" value="{{ equipamento_nome|default:'' }}" class="form-control bg-secondary text-light border-0" placeholder="Nome do equipamento...">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select bg-secondary text-light border-0">
+                        <option value="Todos">Todos</option>
+                        {% for val, label in status_choices %}
+                            <option value="{{ val }}" {% if status_filtro == val %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabela de Empréstimos -->
+    <div class="card bg-dark text-light border-secondary shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-dark table-striped align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Colaborador</th>
+                            <th>Equipamento</th>
+                            <th>Qtd</th>
+                            <th>Data Empréstimo</th>
+                            <th>Previsão</th>
+                            <th>Status</th>
+                            {% if request.user.is_superuser %}
+                                <th class="text-end">Ações</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for emp in emprestimos %}
+                        <tr>
+                            <td>{{ emp.colaborador.nome }}</td>
+                            <td>{{ emp.equipamento.nome }}</td>
+                            <td>{{ emp.quantidade }}</td>
+                            <td>{{ emp.data_emprestimo|date:"d/m/Y" }}</td>
+                            <td>{{ emp.data_prevista_devolucao|date:"d/m/Y" }}</td>
+                            <td>
+                                <span class="badge {% if emp.status == 'Emprestado' %}bg-warning text-dark{% elif emp.status == 'Devolvido' %}bg-success{% else %}bg-danger{% endif %}">
+                                    {{ emp.status }}
+                                </span>
+                            </td>
+                            {% if request.user.is_superuser %}
+                                <td class="text-end">
+                                    <a href="{% url 'nucleo:edita_emprestimo' emp.id %}" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="{% url 'nucleo:atualiza_emprestimo' emp.id %}" class="btn btn-info btn-sm">Alternar Status</a>
+                                    <a href="{% url 'nucleo:exclui_emprestimo' emp.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="{% if request.user.is_superuser %}7{% else %}6{% endif %}" class="text-center text-muted py-4">Nenhum empréstimo registado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

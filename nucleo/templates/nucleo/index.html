@@ -1,0 +1,38 @@
+{% extends 'nucleo/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-light"><i class="fas fa-home me-2 text-warning"></i> Dashboard - Gestão de EPI</h2>
+    
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card bg-dark text-light border-secondary shadow p-3">
+                <h5>Colaboradores</h5>
+                <h3>{{ total_colaboradores }}</h3>
+                <a href="{% url 'nucleo:lista_colaboradores' %}" class="btn btn-outline-warning btn-sm mt-2">Ver Todos</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-dark text-light border-secondary shadow p-3">
+                <h5>Equipamentos</h5>
+                <h3>{{ total_equipamentos }}</h3>
+                <a href="{% url 'nucleo:lista_equipamentos' %}" class="btn btn-outline-warning btn-sm mt-2">Ver Todos</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-dark text-light border-secondary shadow p-3">
+                <h5>Total Empréstimos</h5>
+                <h3>{{ total_emprestimos }}</h3>
+                <a href="{% url 'nucleo:lista_emprestimos' %}" class="btn btn-outline-warning btn-sm mt-2">Ver Todos</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-dark text-light border-secondary shadow p-3">
+                <h5>Empréstimos Ativos</h5>
+                <h3>{{ emprestimos_ativos }}</h3>
+                <a href="{% url 'nucleo:lista_emprestimos' %}" class="btn btn-outline-warning btn-sm mt-2">Ver Ativos</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
