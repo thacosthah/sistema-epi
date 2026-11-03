@@ -5,11 +5,14 @@ class Colaborador(models.Model):
     nome = models.CharField(max_length=100)
     cpf = models.CharField(max_length=14, unique=True)
     cargo = models.CharField(max_length=100)
-    setor = models.CharField(max_length=100, blank=True, null=True) # <--- Adiciona isto se faltar
+    setor = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Colaborador"
+        verbose_name_plural = "Colaboradores"
 
     def __str__(self):
         return self.nome
-
 
 class Equipamento(models.Model):
     nome = models.CharField(max_length=100)
