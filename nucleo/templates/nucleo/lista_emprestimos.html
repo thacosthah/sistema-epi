@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Lista de Empréstimos de EPI</h2>
-        <a href="{% url 'nucleo:cadastra_emprestimo' %}" class="btn btn-success">Registar Novo Empréstimo</a>
+        <a href="{% url 'nucleo:cadastra_emprestimo' %}" class="btn btn-success">ar Novo Empréstimo</a>
     </div>
 
     <!-- Filtros de Pesquisa -->
@@ -76,7 +76,7 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="{% if request.user.is_superuser %}7{% else %}6{% endif %}" class="text-center text-muted py-4">Nenhum empréstimo registado.</td>
+                            <td colspan="{% if request.user.is_superuser %}7{% else %}6{% endif %}" class="text-center text-muted py-4">Nenhum empréstimo registrado.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

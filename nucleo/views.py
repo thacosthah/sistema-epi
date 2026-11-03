@@ -152,7 +152,7 @@ def lista_emprestimos(request):
 
 @login_required
 def cadastra_emprestimo(request):
-    # O usuário comum TEM permissão para registar empréstimos, logo não bloqueamos aqui.
+    # O usuário comum TEM permissão para registrar empréstimos.
     if request.method == 'POST':
         form = EmprestimoEPIForm(request.POST)
         if form.is_valid():
@@ -166,14 +166,14 @@ def cadastra_emprestimo(request):
                     equipamento.save()
                 else:
                     form.add_error('quantidade', 'Quantidade indisponível em estoque!')
-                    return render(request, 'nucleo/criar.html', {'form': form, 'titulo': 'Registar Empréstimo de EPI', 'is_emprestimo': True})
+                    return render(request, 'nucleo/criar.html', {'form': form, 'titulo': 'Registrar Empréstimo de EPI', 'is_emprestimo': True})
             
             emprestimo.save()
             messages.success(request, 'Empréstimo registrado com sucesso!')
             return redirect('nucleo:lista_emprestimos')
     else:
         form = EmprestimoEPIForm()
-    return render(request, 'nucleo/criar.html', {'form': form, 'titulo': 'Registar Empréstimo de EPI', 'is_emprestimo': True})
+    return render(request, 'nucleo/criar.html', {'form': form, 'titulo': 'Registrar Empréstimo de EPI', 'is_emprestimo': True})
 
 
 @login_required

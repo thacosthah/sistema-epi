@@ -34,7 +34,7 @@
                 {% endif %}
             </tr>
             {% empty %}
-            <tr><td colspan="{% if request.user.is_superuser %}4{% else %}3{% endif %}" class="text-center text-muted">Nenhum colaborador registado.</td></tr>
+            <tr><td colspan="{% if request.user.is_superuser %}4{% else %}3{% endif %}" class="text-center text-muted">Nenhum colaborador ado.</td></tr>
             {% endfor %}
         </tbody>
     </table>
