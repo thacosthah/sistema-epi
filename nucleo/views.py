@@ -27,8 +27,8 @@ def lista_colaboradores(request):
 
 @login_required
 def cadastra_colaborador(request):
-    if not request.user.is_superuser:
-        messages.error(request, 'Acesso negado: Apenas administradores podem cadastrar colaboradores.')
+    if not request.user.is_superuser and not request.user.has_perm('nucleo.add_colaborador'):
+        messages.error(request, 'Acesso negado: Não tens permissão para cadastrar colaboradores.')
         return redirect('nucleo:lista_colaboradores')
         
     if request.method == 'POST':
@@ -43,8 +43,8 @@ def cadastra_colaborador(request):
 
 @login_required
 def edita_colaborador(request, pk):
-    if not request.user.is_superuser:
-        messages.error(request, 'Acesso negado: Apenas administradores podem editar colaboradores.')
+    if not request.user.is_superuser and not request.user.has_perm('nucleo.change_colaborador'):
+        messages.error(request, 'Acesso negado: Não tens permissão para editar colaboradores.')
         return redirect('nucleo:lista_colaboradores')
         
     colaborador = get_object_or_404(Colaborador, pk=pk)
@@ -60,8 +60,8 @@ def edita_colaborador(request, pk):
 
 @login_required
 def exclui_colaborador(request, pk):
-    if not request.user.is_superuser:
-        messages.error(request, 'Acesso negado: Apenas administradores podem excluir colaboradores.')
+    if not request.user.is_superuser and not request.user.has_perm('nucleo.delete_colaborador'):
+        messages.error(request, 'Acesso negado: Não tens permissão para excluir colaboradores.')
         return redirect('nucleo:lista_colaboradores')
         
     colaborador = get_object_or_404(Colaborador, pk=pk)
@@ -79,8 +79,8 @@ def lista_equipamentos(request):
 
 @login_required
 def cadastra_equipamento(request):
-    if not request.user.is_superuser:
-        messages.error(request, 'Acesso negado: Apenas administradores podem cadastrar equipamentos.')
+    if not request.user.is_superuser and not request.user.has_perm('nucleo.add_equipamento'):
+        messages.error(request, 'Acesso negado: Não tens permissão para cadastrar equipamentos.')
         return redirect('nucleo:lista_equipamentos')
         
     if request.method == 'POST':
@@ -95,8 +95,8 @@ def cadastra_equipamento(request):
 
 @login_required
 def edita_equipamento(request, pk):
-    if not request.user.is_superuser:
-        messages.error(request, 'Acesso negado: Apenas administradores podem editar equipamentos.')
+    if not request.user.is_superuser and not request.user.has_perm('nucleo.change_equipamento'):
+        messages.error(request, 'Acesso negado: Não tens permissão para editar equipamentos.')
         return redirect('nucleo:lista_equipamentos')
         
     equipamento = get_object_or_404(Equipamento, pk=pk)
@@ -112,8 +112,8 @@ def edita_equipamento(request, pk):
 
 @login_required
 def exclui_equipamento(request, pk):
-    if not request.user.is_superuser:
-        messages.error(request, 'Acesso negado: Apenas administradores podem excluir equipamentos.')
+    if not request.user.is_superuser and not request.user.has_perm('nucleo.delete_equipamento'):
+        messages.error(request, 'Acesso negado: Não tens permissão para excluir equipamentos.')
         return redirect('nucleo:lista_equipamentos')
         
     equipamento = get_object_or_404(Equipamento, pk=pk)

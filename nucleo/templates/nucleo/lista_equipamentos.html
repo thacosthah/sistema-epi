@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="text-light"><i class="fas fa-tools me-2 text-warning"></i> Gestão de Equipamentos</h2>
-        {% if request.user.is_superuser %}
+        {% if request.user.is_superuser or perms.nucleo.add_equipamento %}
             <a href="{% url 'nucleo:cadastra_equipamento' %}" class="btn btn-primary">+ Adicionar Equipamento</a>
         {% endif %}
     </div>
@@ -15,7 +15,7 @@
                 <th>Nome</th>
                 <th>Descrição</th>
                 <th>Estoque</th>
-                {% if request.user.is_superuser %}
+                {% if request.user.is_superuser or perms.nucleo.change_equipamento or perms.nucleo.delete_equipamento %}
                     <th class="text-end">Ações</th>
                 {% endif %}
             </tr>
@@ -26,15 +26,19 @@
                 <td>{{ e.nome }}</td>
                 <td>{{ e.descricao }}</td>
                 <td>{{ e.quantidade_estoque }}</td>
-                {% if request.user.is_superuser %}
+                {% if request.user.is_superuser or perms.nucleo.change_equipamento or perms.nucleo.delete_equipamento %}
                     <td class="text-end">
-                        <a href="{% url 'nucleo:edita_equipamento' e.id %}" class="btn btn-warning btn-sm">Editar</a>
-                        <a href="{% url 'nucleo:exclui_equipamento' e.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                        {% if request.user.is_superuser or perms.nucleo.change_equipamento %}
+                            <a href="{% url 'nucleo:edita_equipamento' e.id %}" class="btn btn-warning btn-sm">Editar</a>
+                        {% endif %}
+                        {% if request.user.is_superuser or perms.nucleo.delete_equipamento %}
+                            <a href="{% url 'nucleo:exclui_equipamento' e.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                        {% endif %}
                     </td>
                 {% endif %}
             </tr>
             {% empty %}
-            <tr><td colspan="{% if request.user.is_superuser %}4{% else %}3{% endif %}" class="text-center text-muted">Nenhum equipamento registrado.</td></tr>
+            <tr><td colspan="{% if request.user.is_superuser or perms.nucleo.change_equipamento or perms.nucleo.delete_equipamento %}4{% else %}3{% endif %}" class="text-center text-muted">Nenhum equipamento registado.</td></tr>
             {% endfor %}
         </tbody>
     </table>
