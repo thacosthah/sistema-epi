@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Lista de Empréstimos de EPI</h2>
-        <a href="{% url 'nucleo:cadastra_emprestimo' %}" class="btn btn-success">Novo Empréstimo</a>
+        <a href="{% url 'nucleo:cadastra_emprestimo' %}" class="btn btn-success">Registar Novo Empréstimo</a>
     </div>
 
     <!-- Filtros de Pesquisa -->
@@ -48,7 +48,7 @@
                             <th>Data Empréstimo</th>
                             <th>Previsão</th>
                             <th>Status</th>
-                            {% if request.user.is_superuser %}
+                            {% if request.user.is_superuser or perms.nucleo.change_emprestimoepi or perms.nucleo.delete_emprestimoepi %}
                                 <th class="text-end">Ações</th>
                             {% endif %}
                         </tr>
@@ -66,17 +66,21 @@
                                     {{ emp.status }}
                                 </span>
                             </td>
-                            {% if request.user.is_superuser %}
+                            {% if request.user.is_superuser or perms.nucleo.change_emprestimoepi or perms.nucleo.delete_emprestimoepi %}
                                 <td class="text-end">
-                                    <a href="{% url 'nucleo:edita_emprestimo' emp.id %}" class="btn btn-warning btn-sm">Editar</a>
-                                    <a href="{% url 'nucleo:atualiza_emprestimo' emp.id %}" class="btn btn-info btn-sm">Alternar Status</a>
-                                    <a href="{% url 'nucleo:exclui_emprestimo' emp.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                    {% if request.user.is_superuser or perms.nucleo.change_emprestimoepi %}
+                                        <a href="{% url 'nucleo:edita_emprestimo' emp.id %}" class="btn btn-warning btn-sm">Editar</a>
+                                        <a href="{% url 'nucleo:atualiza_emprestimo' emp.id %}" class="btn btn-info btn-sm">Alternar Status</a>
+                                    {% endif %}
+                                    {% if request.user.is_superuser or perms.nucleo.delete_emprestimoepi %}
+                                        <a href="{% url 'nucleo:exclui_emprestimo' emp.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                    {% endif %}
                                 </td>
                             {% endif %}
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="{% if request.user.is_superuser %}7{% else %}6{% endif %}" class="text-center text-muted py-4">Nenhum empréstimo registrado.</td>
+                            <td colspan="{% if request.user.is_superuser or perms.nucleo.change_emprestimoepi or perms.nucleo.delete_emprestimoepi %}7{% else %}6{% endif %}" class="text-center text-muted py-4">Nenhum empréstimo registado.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
